@@ -60,6 +60,6 @@ def look_for_new_video():
 try:
   while True:
     look_for_new_video()
-    time.sleep(60)
+    time.sleep(360)
 except KeyboardInterrupt:
   print('Stopping video notification service')
