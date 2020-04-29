@@ -1,24 +1,25 @@
 # Check newly download files and move them to the correct folder
 # Code copied from https://www.youtube.com/watch?v=qbW6FRbaSl0
 
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-
-
 import os
 import json
 import time
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 class MyHandler(FileSystemEventHandler):
   
-  def on_modified(self, event):
+  def on_any_event(self, event):
     for filename in os.listdir(folderToTrack):
-      src = folderToTrack + "/" + filename
-      newDestination = folderDestination + "/" + filename
+      src = os.path.join(folderToTrack, filename)
+      print(src)
+      newDestination = os.path.join(folderDestination, filename)
+      print(newDestination)
       os.rename(src, newDestination)
+      print("Moved")
 
-folderToTrack = '/Users/quang/Desktop'
-folderDestination = '/Users/quang/Documents'
+folderToTrack = "/mnt/c/Users/quang/Desktop/Test1"
+folderDestination = "/mnt/c/Users/quang/Desktop/Test2"
 eventHandler = MyHandler()
 observer = Observer()
 observer.schedule(eventHandler, folderToTrack, recursive=True)
